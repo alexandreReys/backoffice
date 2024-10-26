@@ -19,12 +19,6 @@ export class CompanyService {
   }
 
   async findAll(params: any, tokenData: any) {
-    const token = this.requestContextService.getToken();
-
-    console.log('|||||||||||||||||||||||||');
-    console.log('token', token);
-    console.log('|||||||||||||||||||||||||');
-
     return await this.companyRepository.findAll(params, tokenData);
   }
 
