@@ -1,0 +1,91 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Windows Local NestJS App",
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": [
+        "-Command",
+        "npm run set:env:local; npx nest start --watch"
+      ],
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "restart": true,
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Windows Dev NestJS App",
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": [
+        "-Command",
+        "npm run set:env:dev; npx nest start --watch"
+      ],
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "restart": true,
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Windows Prod NestJS App",
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": [
+        "-Command",
+        "npm run set:env:prod; npx nest start --watch"
+      ],
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "restart": true,
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Linux Local NestJS App",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "npx nest start --watch"],
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "restart": true,
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Linux Dev NestJS App",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "npx nest start --watch"],
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "restart": true,
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Linux Prod NestJS App",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "npx nest start --watch"],
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "restart": true,
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Linux Tests",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "npm run test"],
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true,
+      "restart": false,
+      "outputCapture": "std"
+    }
+  ]
+}
