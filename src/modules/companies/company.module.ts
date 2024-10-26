@@ -10,7 +10,7 @@ import { ContextModule } from '@/modules/request-context/context.module';
   imports: [
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1d' },
+      signOptions: { expiresIn: process.env.JWT_EXPIRATION_TIME },
     }),
     ContextModule,
   ],

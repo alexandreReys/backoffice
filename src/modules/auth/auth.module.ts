@@ -11,7 +11,7 @@ import { UserPostgresRepository } from '@/modules/users/infra/repository/user.po
   imports: [
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1d' },
+      signOptions: { expiresIn: process.env.JWT_EXPIRATION_TIME },
     }),
   ],
   controllers: [AuthController],
