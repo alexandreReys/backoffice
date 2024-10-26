@@ -1,37 +1,79 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from '@/modules/users/application/dto/create-user.dto';
 import { UpdateUserDto } from '@/modules/users/application/dto/update-user.dto';
 import { PrismaService } from '@/infra/database/prisma/PrismaService';
+import { UserResponseDto } from '../dto/user.response.dto';
+import { UserRepositoryInterface } from '../../domain/interface/user.repository.interface';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    @Inject('UserRepositoryInterface')
+    private readonly userRepository: UserRepositoryInterface,
+  ) {}
 
-  create(createUserDto: CreateUserDto) {
-    const user = this.prisma.user.findUnique({
-      where: { id: 'test example' },
-    });
+  async create(data: CreateUserDto): Promise<UserResponseDto> {
+    const email = data.email.toLowerCase().trim();
+    const userEmail = await this.userRepository.findByEmail(email);
+    if (userEmail) {
+      throw new ConflictException('User already registered');
+    }
 
-    console.log('createUserDto', createUserDto, user);
-
-    return 'This action adds a new user';
+    const user = this.userRepository.create(data);
+    return user;
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll(params: any, tokenData: any) {
+    return await this.userRepository.findAll(params, tokenData);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findById(id: string) {
+    const user = await this.userRepository.findById(id);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    console.log('updateUserDto', updateUserDto);
+  async findByEmail(email: string) {
+    const user = await this.userRepository.findByEmail(email);
 
-    return `This action updates a #${id} user`;
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    const user = await this.userRepository.findById(id);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    await this.userRepository.remove(id);
+
+    return;
+  }
+
+  async update(id: string, data: UpdateUserDto) {
+    let user = await this.userRepository.findById(id);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    user = await this.userRepository.update(id, data);
+
+    return user;
   }
 }
