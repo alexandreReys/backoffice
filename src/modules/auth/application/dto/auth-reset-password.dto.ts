@@ -1,0 +1,36 @@
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
+
+export class AuthResetPasswordDto {
+  @ApiProperty({
+    description: 'Token for reset password',
+    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIwMjQwZjIwLWUwZjMtNGIwZi1hZjIwLWU',
+  })
+  @IsString()
+  @IsNotEmpty()
+  token: string;
+
+  @ApiProperty({
+    description: 'New password',
+    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIwMjQwZjIwLWUwZjMtNGIwZi1hZjIwLWU',
+  })
+  @IsString()
+  @IsNotEmpty()
+  newPassword: string;
+}
+
+export function AuthForgotPasswordDtoValidationPipe() {
+  return new ValidationPipe({
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    exceptionFactory: errors => {
+      const messages = errors.map((error: any) => {
+        const property = error.property;
+        const constraints = Object.values(error.constraints).join(', ');
+        return `${property} - ${constraints}`;
+      });
+      throw new BadRequestException(`Invalid fields: ${messages.join(', ')}`);
+    },
+  });
+}
