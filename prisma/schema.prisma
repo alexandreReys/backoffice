@@ -19,6 +19,8 @@ model User {
   photoUrl      String?
   emailVerified DateTime?
 
+  branchUsers BranchUser[] @relation("UserBranches")
+
   @@map("users")
 }
 
@@ -40,8 +42,24 @@ model Branch {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  company Company @relation("CompanyBranches", fields: [companyId], references: [id])
+  company     Company      @relation("CompanyBranches", fields: [companyId], references: [id])
+  branchUsers BranchUser[] @relation("BranchUsers")
 
   @@index([companyId, id])
   @@map("branches")
+}
+
+model BranchUser {
+  id        String   @id @default(uuid())
+  userId    String
+  branchId  String
+  createdAt DateTime @default(now())
+
+  user   User   @relation("UserBranches", fields: [userId], references: [id])
+  branch Branch @relation("BranchUsers", fields: [branchId], references: [id])
+
+  @@unique([userId, branchId])
+  @@index([userId])
+  @@index([branchId])
+  @@map("branch_users")
 }
