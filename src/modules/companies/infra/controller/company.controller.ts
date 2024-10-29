@@ -33,6 +33,8 @@ export class CompanyController {
 
   @Post()
   @ApiTags('companies')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @HttpCode(200)
   @ApiResponse({ status: HttpStatus.OK, type: CompanyResponseDto })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
