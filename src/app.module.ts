@@ -6,12 +6,14 @@ import { CompanyModule } from '@/modules/companies/company.module';
 import { TokenMiddleware } from '@/middlewares/token.middleware';
 import { ContextModule } from '@/modules/request-context/context.module';
 import { JwtModule } from '@nestjs/jwt';
+import { BranchModule } from './modules/branches/branch.module';
 
 @Module({
   imports: [
     UsersModule,
     AuthModule,
     CompanyModule,
+    BranchModule,
     ContextModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
