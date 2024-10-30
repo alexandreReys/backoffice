@@ -44,6 +44,7 @@ model Branch {
 
   company     Company      @relation("CompanyBranches", fields: [companyId], references: [id])
   branchUsers BranchUser[] @relation("BranchUsers")
+  branchBots  Bot[]        @relation("BranchBots")
 
   @@index([companyId, id])
   @@map("branches")
@@ -62,4 +63,17 @@ model BranchUser {
   @@index([userId])
   @@index([branchId])
   @@map("branch_users")
+}
+
+model Bot {
+  id        String   @id @default(uuid())
+  branchId  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  branch Branch @relation("BranchBots", fields: [branchId], references: [id])
+
+  @@index([branchId, id])
+  @@map("bots")
 }

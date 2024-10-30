@@ -8,6 +8,7 @@ import { ContextModule } from '@/modules/request-context/context.module';
 import { JwtModule } from '@nestjs/jwt';
 import { BranchModule } from './modules/branches/branch.module';
 import { BranchUserModule } from './modules/branch-users/branch-user.module';
+import { BotModule } from './modules/bots/bot.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { BranchUserModule } from './modules/branch-users/branch-user.module';
     BranchModule,
     BranchUserModule,
     ContextModule,
+    BotModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: process.env.JWT_EXPIRATION_TIME },
