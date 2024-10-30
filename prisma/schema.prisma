@@ -42,10 +42,11 @@ model Branch {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  company     Company      @relation("CompanyBranches", fields: [companyId], references: [id])
-  branchUsers BranchUser[] @relation("BranchUsers")
-  branchBots  Bot[]        @relation("BranchBots")
-  branchTasks Task[]       @relation("BranchTasks")
+  company        Company      @relation("CompanyBranches", fields: [companyId], references: [id])
+  branchUsers    BranchUser[] @relation("BranchUsers")
+  branchBots     Bot[]        @relation("BranchBots")
+  branchTasks    Task[]       @relation("BranchTasks")
+  branchProducts Product[]    @relation("BranchProducts")
 
   @@index([companyId, id])
   @@map("branches")
@@ -90,4 +91,17 @@ model Task {
 
   @@index([branchId, id])
   @@map("tasks")
+}
+
+model Product {
+  id        String   @id @default(uuid())
+  branchId  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  branch Branch @relation("BranchProducts", fields: [branchId], references: [id])
+
+  @@index([branchId, id])
+  @@map("products")
 }

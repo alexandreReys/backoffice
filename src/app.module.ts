@@ -10,17 +10,19 @@ import { BranchModule } from './modules/branches/branch.module';
 import { BranchUserModule } from './modules/branch-users/branch-user.module';
 import { BotModule } from './modules/bots/bot.module';
 import { TaskModule } from './modules/tasks/task.module';
+import { ProductModule } from './modules/products/product.module';
 
 @Module({
   imports: [
-    UsersModule,
     AuthModule,
+    ContextModule,
+    UsersModule,
     CompanyModule,
     BranchModule,
     BranchUserModule,
-    ContextModule,
     BotModule,
     TaskModule,
+    ProductModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: process.env.JWT_EXPIRATION_TIME },
