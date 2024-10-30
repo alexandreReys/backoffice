@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { BranchModule } from './modules/branches/branch.module';
 import { BranchUserModule } from './modules/branch-users/branch-user.module';
 import { BotModule } from './modules/bots/bot.module';
+import { TaskModule } from './modules/tasks/task.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { BotModule } from './modules/bots/bot.module';
     BranchUserModule,
     ContextModule,
     BotModule,
+    TaskModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: process.env.JWT_EXPIRATION_TIME },
